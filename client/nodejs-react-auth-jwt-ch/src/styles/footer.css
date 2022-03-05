@@ -1,0 +1,24 @@
+footer {
+    background-color: #1B1F23;
+    padding: 10px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+footer h3 {
+    color: white;
+}
+
+footer h4 {
+    color: white;
+}
+
+footer a {
+    text-decoration: none;
+    color: rgb(57, 110, 224);
+}
+
+footer a:hover {
+    font-size: 20px;
+}

@@ -1,0 +1,38 @@
+.registerSec {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    background-color: #1B1F23; 
+    padding: 25px;
+    height: 88.5vh;
+}
+
+.registerSec h3 {
+    color: white;
+}
+
+.registerSec form {
+    padding: 15px;
+}
+
+.registerSec form input {
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    border-style: none;
+    width: 250px;
+}
+
+.registerSec form button {
+    padding: 10px;
+    text-align: center;
+    border-style: none;
+    width: 270px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.registerSec form button:hover {
+    color: rgb(84, 138, 219);
+    font-size: 20px;
+}
