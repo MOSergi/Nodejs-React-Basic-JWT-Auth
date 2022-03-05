@@ -6,8 +6,8 @@ function Navbar(){
     return(
         <nav className="menu">
             <Link className="links" to="/">Home</Link>
-            <Link className="links link-g" to="/Register">Sing up</Link>
-            <Link className="links" to="/Login">Sing in</Link>
+            <Link className="links link-g" to="/Register">Registro</Link>
+            <Link className="links" to="/Login">Login</Link>
         </nav>
     );
 }
