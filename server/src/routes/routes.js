@@ -98,7 +98,8 @@ rutas.get("/Login", (req, res)=>{
         try {
             token.verify(tokenF, secreto, (fallo, decoded)=>{
                 if (fallo) {
-                    res.clearCookie("token", {path: "/"});
+                    //res.clearCookie("token", {path: "/"});
+                    res.cookie("token", "expirado", {path : "/", httpOnly: true, maxAge: 5*60*10});
                     res.json("Expired");
                 } 
     

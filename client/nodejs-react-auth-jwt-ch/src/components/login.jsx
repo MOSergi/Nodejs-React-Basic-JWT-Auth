@@ -21,10 +21,25 @@ function Login(){
         })
         .then(response => response.json())
         .then((userdata) => {
-            if (userdata != "noToken"){
+
+            console.log(userdata);
+
+            let LoginSec = document.querySelector(".loginRes");
+            let h3 = document.createElement("h3");
+
+            LoginSec.innerHTML = "";
+
+            if (userdata == "todavia no"){
                 setLoginStatus(true);
-            } else {
+            } else if (userdata == "noToken") {
                 setLoginStatus(false);
+            } else if (userdata == "Expired"){
+                setLoginStatus(false);
+                setLogin(false);
+                LoginSec.style.padding = "10px;"
+                LoginSec.style.backgroundColor = "Orange";
+                h3.innerText = "El token no es válido o ha caducado";
+                LoginSec.append(h3);
             }
 
             if (login == true && loginStatus == true){
