@@ -9,6 +9,7 @@ const rutas = express.Router();
 
 //importamos el objeto con la configuración de la base de datos
 const dbDt = require("../database/conection.js");
+const { application } = require("express");
 //configurando conexion a la base de datos
 const conexion = mysql.createConnection(dbDt);
 conexion.connect();
@@ -40,6 +41,10 @@ rutas.post("/Registrar", (req, res)=>{
             res.json("Invalid Email");
         }
     })
+});
+
+rutas.post("/Login", (req, res)=>{
+    res.json("has llegado");
 });
 
 

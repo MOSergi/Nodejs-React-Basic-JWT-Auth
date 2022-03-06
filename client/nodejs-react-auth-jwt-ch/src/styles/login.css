@@ -1,0 +1,38 @@
+.LoginSec {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    background-color: #1B1F23; 
+    padding: 25px;
+    height: 88.5vh;
+}
+
+.LoginSec h3 {
+    color: white;
+}
+
+.LoginSec form {
+    padding: 10px;
+}
+
+.LoginSec form input {
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    border-style: none;
+    width: 250px;
+}
+
+.LoginSec form button {
+    padding: 10px;
+    text-align: center;
+    border-style: none;
+    width: 270px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.LoginSec form button:hover {
+    color: rgb(84, 138, 219);
+    font-size: 20px;
+}
