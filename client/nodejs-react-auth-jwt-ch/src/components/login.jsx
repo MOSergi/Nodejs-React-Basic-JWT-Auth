@@ -1,11 +1,14 @@
 import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
+import validateLogin from "../js/validateLogin";
 
 function Login(){
 
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
+    let navegar = useNavigate();
 
     const handleSubmit = (e)=>{
         e.preventDefault();
@@ -25,7 +28,9 @@ function Login(){
         })
         .then(respuesta => respuesta.json())
         .then((data) => {
-            console.log(data);
+            if (validateLogin(data) == "valid"){
+                navegar("/");
+            }
         })
         .catch(error => console.log(error))
     }
@@ -40,6 +45,9 @@ function Login(){
                 <br />
                 <button>Login</button>
             </form>
+            <div className="loginRes">
+
+            </div>
         </section>
     );
 }
