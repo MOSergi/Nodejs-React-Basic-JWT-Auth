@@ -30,6 +30,7 @@ rutas.post("/Registrar", (req, res)=>{
             bcrypt.hash(userData.password, 10, (err, passwordHash)=>{
                 if (err){
                     console.log(err);
+                    res.json("incapaz de realizar la peticion");
                 }
                 conexion.query("INSERT INTO usuarios (nombre, email, password) VALUES (?,?,?)", [userData.nombre, userData.email, passwordHash], (err, resultado)=>{
                     if (err){
@@ -53,6 +54,7 @@ rutas.post("/Login", (req, res)=>{
     conexion.query("SELECT email, password FROM usuarios WHERE email = ?", [datos.email], (err, info)=>{
         if (err){
             console.log(err);
+            res.json("Se ha producido un error inesperado, intentelo de nuevo");
         }
 
         if (info == ""){
@@ -62,17 +64,19 @@ rutas.post("/Login", (req, res)=>{
             bcrypt.compare(datos.password, bdPassword, (err, respuesta)=>{
                 if (err){
                     console.log(err);
+                    res.json("Fallo al procesar la solicitud de Login, intentelo de nuevo");
                 } 
 
                 if (respuesta == false){
                     res.json("Invalid Password");
                 } else {
                     let userEmail = info[0].email;
-                    token.sign(userEmail, secreto, (error, token)=>{
+                    token.sign({ valor: userEmail}, secreto, {expiresIn : "10s"}, (error, token)=>{
                         if (error){
                             console.log(error);
+                            res.json("Error al procesar la solicitud");
                         }
-                        res.cookie("token", token, {path : "/", httpOnly: true});
+                        res.cookie("token", token, {path : "/", httpOnly: true, maxAge: 5*60*100});
                         res.json("Valid Auth");
                     });
                 }
@@ -85,5 +89,31 @@ rutas.post("/Login", (req, res)=>{
 
 });
 
+rutas.get("/Login", (req, res)=>{
+    if (req.cookies.token == undefined){
+        res.json("noToken");
+    } else {
+        let tokenF = req.cookies.token;
+
+        try {
+            token.verify(tokenF, secreto, (fallo, decoded)=>{
+                if (fallo) {
+                    res.clearCookie("token", {path: "/"});
+                    res.json("Expired");
+                } 
+    
+                let segundos = new Date();
+    
+                if (Math.floor(segundos.getTime()/1000) < decoded.exp){
+                    res.json("todavia no");
+                    console.log("no caducado");
+                }
+            });
+        } catch (error){
+            console.log("El token ha caducado");
+        }
+        
+    }
+});
 
 module.exports = rutas;

@@ -1,7 +1,8 @@
-import { React, useState } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
 import validateLogin from "../js/validateLogin";
+import UserContext from "../context/userContext";
 
 function Login(){
 
@@ -9,6 +10,37 @@ function Login(){
     const [password, setPassword] = useState(null);
 
     let navegar = useNavigate();
+
+    const {loginStatus, setLoginStatus, login, setLogin} = useContext(UserContext);
+    const [prueba, setPrueba] = useState("");
+
+
+    useEffect(()=>{
+        fetch("http://localhost:4000/Login",{
+            credentials: "include"
+        })
+        .then(response => response.json())
+        .then((userdata) => {
+            if (userdata != "noToken"){
+                setLoginStatus(true);
+            } else {
+                setLoginStatus(false);
+            }
+
+            if (login == true && loginStatus == true){
+                navegar("/");
+            } else if (login == false && loginStatus == true){
+                navegar("/");
+            } else if (login == true && loginStatus != true){
+                navegar("/Login/");
+            } else if (login == false && loginStatus != true){
+                navegar("/Login/");
+            }
+
+        })
+        .catch(errores => console.log(errores));
+    }, [loginStatus]);
+
 
     const handleSubmit = (e)=>{
         e.preventDefault();
@@ -29,6 +61,7 @@ function Login(){
         .then(respuesta => respuesta.json())
         .then((data) => {
             if (validateLogin(data) == "valid"){
+                setLogin(true);
                 navegar("/");
             }
         })
