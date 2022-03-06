@@ -76,7 +76,7 @@ rutas.post("/Login", (req, res)=>{
                             console.log(error);
                             res.json("Error al procesar la solicitud");
                         }
-                        res.cookie("token", token, {path : "/", httpOnly: true, maxAge: 5*60*100});
+                        res.cookie("token", token, {path : "/", httpOnly: true, maxAge: 5*60*300});
                         res.json("Valid Auth");
                     });
                 }
