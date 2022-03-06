@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import "../styles/register.css";
 import validarPassword from "../js/confirmPass";
+import validRegister from "../js/validRegister";
 
 
 function Register(){
@@ -31,7 +32,7 @@ function Register(){
             })
             .then(response => response.json())
             .then((data) =>{
-                console.log(data);
+                validRegister(data);
             })
             .catch(error => console.log(error));
         }
@@ -51,6 +52,7 @@ function Register(){
                 <br />
                 <button>Registrarse</button>
             </form>
+            <div className="DivRespuesta"></div>
         </section>
     );
 }
