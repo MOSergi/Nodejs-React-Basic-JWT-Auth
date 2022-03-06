@@ -2,10 +2,13 @@
 const express = require("express");
 const mysql = require("mysql");
 const bcrypt = require("bcryptjs");
+const token = require("jsonwebtoken");
 
 //express Router
 const rutas = express.Router();
 
+//secret
+let secreto = require("../auth/secret.js");
 
 //importamos el objeto con la configuración de la base de datos
 const dbDt = require("../database/conection.js");
@@ -44,7 +47,42 @@ rutas.post("/Registrar", (req, res)=>{
 });
 
 rutas.post("/Login", (req, res)=>{
-    res.json("has llegado");
+    //res.json(req.body);
+    let datos = req.body;
+
+    conexion.query("SELECT email, password FROM usuarios WHERE email = ?", [datos.email], (err, info)=>{
+        if (err){
+            console.log(err);
+        }
+
+        if (info == ""){
+            res.json("No match email");
+        } else {
+            let bdPassword = info[0].password;
+            bcrypt.compare(datos.password, bdPassword, (err, respuesta)=>{
+                if (err){
+                    console.log(err);
+                } 
+
+                if (respuesta == false){
+                    res.json("Invalid Password");
+                } else {
+                    let userEmail = info[0].email;
+                    token.sign(userEmail, secreto, (error, token)=>{
+                        if (error){
+                            console.log(error);
+                        }
+                        res.cookie("token", token, {path : "/", httpOnly: true});
+                        res.json("Valid Auth");
+                    });
+                }
+            });
+
+        }
+
+    });
+
+
 });
 
 
