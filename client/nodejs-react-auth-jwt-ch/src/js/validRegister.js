@@ -15,7 +15,7 @@ function validRegister(data){
         div.style.padding = "15px";
         div.style.borderRadius = "5px";
         //añadimos el texto al H3
-        h3.innerText = data;
+        h3.innerText = "Este correo no es valido, intentelo con otro";
         //añadimos el h3 al div
         div.append(h3);
         //añadimos el div al section
@@ -25,7 +25,7 @@ function validRegister(data){
         div.style.padding = "15px";
         div.style.borderRadius = "5px";
         //añadimos el texto al H3
-        h3.innerText = data;
+        h3.innerText = "Error durante el registro";
         //añadimos el h3 al div
         div.append(h3);
         //añadimos el div al section
@@ -36,7 +36,7 @@ function validRegister(data){
         div.style.padding = "15px";
         div.style.borderRadius = "5px";
         //añadimos el texto al H3
-        h3.innerText = data;
+        h3.innerText = "Registro satisfactorio";
         //añadimos el h3 al div
         div.append(h3);
         //añadimos el div al section
