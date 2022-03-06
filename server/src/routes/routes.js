@@ -1,10 +1,15 @@
-const { application } = require("express");
+const { application, json } = require("express");
 const express = require("express");
+const mysql = require("mysql");
 
 const rutas = express.Router();
 
-rutas.get("/Registrar", (req, res)=>{
-    res.send("hola desde el backend");
+rutas.post("/Registrar", (req, res)=>{
+
+    let userData = req.body;
+
+    res.json(userData);
+
 });
 
 

@@ -15,7 +15,25 @@ function Register(){
         if (validarPassword() == "error"){
             alert("Las contraseñas no coinciden");
         } else {
-            console.log(nombre);
+
+            let data = {
+                nombre : nombre,
+                email: email,
+                password : password
+            }
+
+            fetch("http://localhost:4000/Registrar", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers : {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then((data) =>{
+                console.log(data);
+            })
+            .catch(error => console.log(error));
         }
     }
 

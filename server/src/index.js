@@ -1,7 +1,7 @@
 //requires 
 const express = require("express");
-const mysql = require("mysql");
 const morgan = require("morgan");
+const cors = require("cors");
 
 //iniciar express
 const app = express();
@@ -9,16 +9,19 @@ const app = express();
 //settings
 app.set("PORT", process.env.PORT || 4000);
 
-//conexion a la base de datos
-
-//requerimos los datos de conexion
-const datos = require("./database/conection.js");
-const conexion = mysql.createConnection(datos);
-conexion.connect();
-
-
 //basic middleware
 app.use(morgan('dev'));
+//cors y configuracion
+let corsOptions = {
+   "origin" : "http://localhost:3000",
+   "methods" : "GET,POST",
+   "credentials" : "include" 
+}
+
+app.use(cors(corsOptions));
+
+//app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 
 //routes
 app.use(require('./routes/routes.js'));
