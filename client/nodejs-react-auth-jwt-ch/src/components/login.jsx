@@ -22,34 +22,25 @@ function Login(){
         .then(response => response.json())
         .then((userdata) => {
 
-            console.log(userdata);
-
             let LoginSec = document.querySelector(".loginRes");
             let h3 = document.createElement("h3");
 
-            LoginSec.innerHTML = "";
+            LoginSec.innerHTML = " ";
 
-            if (userdata == "todavia no"){
+            if (userdata == "LogedIn"){
                 setLoginStatus(true);
-            } else if (userdata == "noToken") {
+                navegar("/");
+            } else if (userdata == "NoToken") {
                 setLoginStatus(false);
-            } else if (userdata == "Expired"){
+                navegar("/Login/");
+            } else if (userdata == "Invalid Token"){
                 setLoginStatus(false);
                 setLogin(false);
+                navegar("/Login/");
                 LoginSec.style.padding = "10px;"
                 LoginSec.style.backgroundColor = "Orange";
                 h3.innerText = "El token no es válido o ha caducado";
                 LoginSec.append(h3);
-            }
-
-            if (login == true && loginStatus == true){
-                navegar("/");
-            } else if (login == false && loginStatus == true){
-                navegar("/");
-            } else if (login == true && loginStatus != true){
-                navegar("/Login/");
-            } else if (login == false && loginStatus != true){
-                navegar("/Login/");
             }
 
         })
@@ -93,9 +84,7 @@ function Login(){
                 <br />
                 <button>Login</button>
             </form>
-            <div className="loginRes">
-
-            </div>
+            <div className="loginRes"></div>
         </section>
     );
 }

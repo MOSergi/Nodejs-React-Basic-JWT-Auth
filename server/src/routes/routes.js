@@ -17,6 +17,10 @@ const { application } = require("express");
 const conexion = mysql.createConnection(dbDt);
 conexion.connect();
 
+//auth middleware
+const validateToken = require("../auth/validateToken.js");
+
+
 //rutas
 rutas.post("/Registrar", (req, res)=>{
 
@@ -89,32 +93,14 @@ rutas.post("/Login", (req, res)=>{
 
 });
 
-rutas.get("/Login", (req, res)=>{
-    if (req.cookies.token == undefined){
-        res.json("noToken");
-    } else {
-        let tokenF = req.cookies.token;
-
-        try {
-            token.verify(tokenF, secreto, (fallo, decoded)=>{
-                if (fallo) {
-                    //res.clearCookie("token", {path: "/"});
-                    res.cookie("token", "expirado", {path : "/", httpOnly: true, maxAge: 5*60*5000});
-                    res.json("Expired");
-                } 
-    
-                let segundos = new Date();
-    
-                if (Math.floor(segundos.getTime()/1000) < decoded.exp){
-                    res.json("todavia no");
-                    console.log("no caducado");
-                }
-            });
-        } catch (error){
-            console.log("El token ha caducado");
-        }
-        
-    }
+rutas.get("/Login", validateToken, (req, res)=>{
+    res.json("LogedIn");
 });
+
+rutas.get("/Registrar", validateToken, (req, res)=>{
+    res.json("LogedIn");
+});
+
+
 
 module.exports = rutas;

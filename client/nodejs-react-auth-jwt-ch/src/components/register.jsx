@@ -1,7 +1,9 @@
-import { React, useState } from "react";
+import { React, useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/register.css";
 import validarPassword from "../js/confirmPass";
 import validRegister from "../js/validRegister";
+import UserContext from "../context/userContext";
 
 
 function Register(){
@@ -10,6 +12,34 @@ function Register(){
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
+    const {loginStatus, setLoginStatus, login, setLogin} = useContext(UserContext);
+
+    const navegar = useNavigate();
+
+    useEffect(()=>{
+        fetch("http://localhost:4000/Registrar", {
+            credentials : "include"
+        })
+        .then(respuesta => respuesta.json())
+        .then((datos) =>{
+            if (datos == "NoToken"){
+                setLoginStatus(false);
+            } else if (datos == "Invalid Token"){
+                setLoginStatus(false);
+            } else if (datos == "LogedIn"){
+                setLoginStatus(true);
+            }
+
+            if (loginStatus == true){
+                navegar("/");
+            } else {
+                navegar("/Register/");
+            }
+        })
+        .catch(error => console.log(error))
+
+        
+    }, [loginStatus]);
 
     const handleSubmit = (e)=>{
         e.preventDefault();
