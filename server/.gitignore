@@ -1,3 +1,3 @@
 /node_modules
 /src/database/
-/src/auth/
+/src/auth/secret.js

@@ -75,12 +75,12 @@ rutas.post("/Login", (req, res)=>{
                     res.json("Invalid Password");
                 } else {
                     let userEmail = info[0].email;
-                    token.sign({ valor: userEmail}, secreto, {expiresIn : "10s"}, (error, token)=>{
+                    token.sign({ valor: userEmail}, secreto, {expiresIn : "10m"}, (error, token)=>{
                         if (error){
                             console.log(error);
                             res.json("Error al procesar la solicitud");
                         }
-                        res.cookie("token", token, {path : "/", httpOnly: true, maxAge: 5*60*300});
+                        res.cookie("token", token, {path : "/", httpOnly: true, maxAge: 900000});
                         res.json("Valid Auth");
                     });
                 }
