@@ -93,14 +93,18 @@ rutas.post("/Login", (req, res)=>{
 
 });
 
-rutas.get("/Login", validateToken, (req, res)=>{
+rutas.get("/validateLoged", validateToken, (req, res)=>{
     res.json("LogedIn");
 });
 
-rutas.get("/Registrar", validateToken, (req, res)=>{
-    res.json("LogedIn");
+rutas.get("/Profile", validateToken, (req, res)=>{
+    let tokenuser = req.tokenUsuario;
+    res.json(tokenuser);
 });
 
-
+rutas.get("/Logout", (req, res)=>{
+        res.clearCookie("token");
+        res.json("Success Logout");
+})
 
 module.exports = rutas;
