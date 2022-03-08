@@ -17,7 +17,7 @@ function Register(){
     const navegar = useNavigate();
 
     useEffect(()=>{
-        fetch("http://localhost:4000/Registrar", {
+        fetch("http://localhost:4000/validateLoged", {
             credentials : "include"
         })
         .then(respuesta => respuesta.json())
@@ -31,7 +31,7 @@ function Register(){
             }
 
             if (loginStatus == true){
-                navegar("/");
+                navegar("/Profile/");
             } else {
                 navegar("/Register/");
             }
