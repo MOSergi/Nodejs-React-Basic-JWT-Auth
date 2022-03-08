@@ -12,24 +12,25 @@ function Login(){
     let navegar = useNavigate();
 
     const {loginStatus, setLoginStatus, login, setLogin} = useContext(UserContext);
-    const [prueba, setPrueba] = useState("");
 
 
     useEffect(()=>{
-        fetch("http://localhost:4000/Login",{
+        fetch("http://localhost:4000/validateLoged",{
             credentials: "include"
         })
         .then(response => response.json())
         .then((userdata) => {
 
-            let LoginSec = document.querySelector(".loginRes");
+            /*let LoginSec = document.querySelector(".loginRes");
             let h3 = document.createElement("h3");
 
-            LoginSec.innerHTML = " ";
+            if (LoginSec != null){
+                LoginSec.innerHTML = "";
+            }*/
 
             if (userdata == "LogedIn"){
                 setLoginStatus(true);
-                navegar("/");
+                navegar("/Profile/");
             } else if (userdata == "NoToken") {
                 setLoginStatus(false);
                 navegar("/Login/");
@@ -37,10 +38,11 @@ function Login(){
                 setLoginStatus(false);
                 setLogin(false);
                 navegar("/Login/");
+                /*
                 LoginSec.style.padding = "10px;"
                 LoginSec.style.backgroundColor = "Orange";
                 h3.innerText = "El token no es válido o ha caducado";
-                LoginSec.append(h3);
+                LoginSec.append(h3);*/
             }
 
         })
@@ -68,7 +70,8 @@ function Login(){
         .then((data) => {
             if (validateLogin(data) == "valid"){
                 setLogin(true);
-                navegar("/");
+                setLoginStatus(true);
+                navegar("/Profile/");
             }
         })
         .catch(error => console.log(error))
