@@ -14,6 +14,7 @@ function validateToken(req, res, next){
             }
 
             if (Date.now()/1000 < authtoken.exp){
+                req.tokenUsuario = authtoken.valor;
                 next();
             } 
 
