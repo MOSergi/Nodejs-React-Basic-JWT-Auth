@@ -9,6 +9,7 @@ function validateToken(req, res, next){
         const tokendUsuario = req.cookies.token;
         token.verify(tokendUsuario, secret, (error, authtoken)=>{
             if (error){
+                res.cookie("token", "expired", {path: "/", httpOnly: true, maxAge: 1000});
                 return res.json("Invalid Token");
             }
 

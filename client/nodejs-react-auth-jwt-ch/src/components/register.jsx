@@ -24,17 +24,15 @@ function Register(){
         .then((datos) =>{
             if (datos == "NoToken"){
                 setLoginStatus(false);
+                navegar("/Register/");
             } else if (datos == "Invalid Token"){
                 setLoginStatus(false);
+                navegar("/Login/");
             } else if (datos == "LogedIn"){
                 setLoginStatus(true);
+                navegar("/Profile/");
             }
 
-            if (loginStatus == true){
-                navegar("/Profile/");
-            } else {
-                navegar("/Register/");
-            }
         })
         .catch(error => console.log(error))
 

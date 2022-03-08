@@ -21,12 +21,14 @@ function Login(){
         .then(response => response.json())
         .then((userdata) => {
 
-            /*let LoginSec = document.querySelector(".loginRes");
+            let LoginSec = document.querySelector(".loginRes");
             let h3 = document.createElement("h3");
 
             if (LoginSec != null){
                 LoginSec.innerHTML = "";
-            }*/
+            }
+
+            console.log(userdata);
 
             if (userdata == "LogedIn"){
                 setLoginStatus(true);
@@ -36,13 +38,12 @@ function Login(){
                 navegar("/Login/");
             } else if (userdata == "Invalid Token"){
                 setLoginStatus(false);
-                setLogin(false);
+                //setLogin(false);
                 navegar("/Login/");
-                /*
                 LoginSec.style.padding = "10px;"
                 LoginSec.style.backgroundColor = "Orange";
                 h3.innerText = "El token no es válido o ha caducado";
-                LoginSec.append(h3);*/
+                LoginSec.append(h3);
             }
 
         })

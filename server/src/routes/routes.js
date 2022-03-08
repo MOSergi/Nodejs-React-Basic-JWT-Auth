@@ -80,7 +80,7 @@ rutas.post("/Login", (req, res)=>{
                             console.log(error);
                             res.json("Error al procesar la solicitud");
                         }
-                        res.cookie("token", token, {path : "/", httpOnly: true, maxAge: 900000});
+                        res.cookie("token", token, {path : "/", httpOnly: true, maxAge: 800000});
                         res.json("Valid Auth");
                     });
                 }
@@ -103,8 +103,19 @@ rutas.get("/Profile", validateToken, (req, res)=>{
 });
 
 rutas.get("/Logout", (req, res)=>{
-        res.clearCookie("token");
+    /*
+    Esto seria enviando una nueva cookie 1 ms y el token expirando en lo mismo
+    token.sign({ valor: "expirado"}, secreto, {expiresIn : "1"}, (error, tokenExp)=>{
+        if (error){
+            console.log(error);
+            res.json("Error al procesar la solicitud");
+        }
+        res.cookie("token", tokenExp, {path : "/", httpOnly: true, maxAge: 1});
         res.json("Success Logout");
+    });*/
+    //haciendo directamente el borrado de cookies
+    res.clearCookie("token");
+    res.json("Success Logout");
 })
 
 module.exports = rutas;
