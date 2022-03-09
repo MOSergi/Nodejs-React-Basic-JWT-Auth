@@ -24,7 +24,7 @@ function Navbar(){
         })
         .catch(error => console.log(error))
 
-    }, [loginStatus])
+    }, [])
 
     if (loginStatus == true){
         return(
