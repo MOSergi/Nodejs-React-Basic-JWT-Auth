@@ -12,7 +12,7 @@ function Register(){
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
-    const {loginStatus, setLoginStatus, login, setLogin} = useContext(UserContext);
+    const {loginStatus, setLoginStatus} = useContext(UserContext);
 
     const navegar = useNavigate();
 
@@ -24,10 +24,8 @@ function Register(){
         .then((datos) =>{
             if (datos == "NoToken"){
                 setLoginStatus(false);
-                navegar("/Register/");
             } else if (datos == "Invalid Token"){
                 setLoginStatus(false);
-                navegar("/Login/");
             } else if (datos == "LogedIn"){
                 setLoginStatus(true);
                 navegar("/Profile/");
@@ -37,7 +35,7 @@ function Register(){
         .catch(error => console.log(error))
 
         
-    }, [loginStatus]);
+    }, []);
 
     const handleSubmit = (e)=>{
         e.preventDefault();

@@ -12,12 +12,11 @@ import Profile from "./components/userProfile";
 function App() {
 
   const [loginStatus, setLoginStatus] = useState(false);
-  const [login, setLogin] = useState(false);
 
   return (
     <div className="App">
       <Router>
-        <UserContext.Provider value={{loginStatus, setLoginStatus, login, setLogin}}>
+        <UserContext.Provider value={{loginStatus, setLoginStatus}}>
           <Routes>
                 <Route path="/" element={<><Navbar/> <Section/> <Footer/> </>}></Route>
                 <Route path="/Register" element={<><Navbar/> <Register/></>}></Route>

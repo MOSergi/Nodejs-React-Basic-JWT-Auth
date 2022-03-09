@@ -11,7 +11,7 @@ function Login(){
 
     let navegar = useNavigate();
 
-    const {loginStatus, setLoginStatus, login, setLogin} = useContext(UserContext);
+    const {loginStatus, setLoginStatus} = useContext(UserContext);
 
 
     useEffect(()=>{
@@ -35,11 +35,8 @@ function Login(){
                 navegar("/Profile/");
             } else if (userdata == "NoToken") {
                 setLoginStatus(false);
-                navegar("/Login/");
             } else if (userdata == "Invalid Token"){
                 setLoginStatus(false);
-                //setLogin(false);
-                navegar("/Login/");
                 LoginSec.style.padding = "10px;"
                 LoginSec.style.backgroundColor = "Orange";
                 h3.innerText = "El token no es válido o ha caducado";
@@ -48,7 +45,7 @@ function Login(){
 
         })
         .catch(errores => console.log(errores));
-    }, [loginStatus]);
+    }, []);
 
 
     const handleSubmit = (e)=>{
@@ -70,7 +67,6 @@ function Login(){
         .then(respuesta => respuesta.json())
         .then((data) => {
             if (validateLogin(data) == "valid"){
-                setLogin(true);
                 setLoginStatus(true);
                 navegar("/Profile/");
             }

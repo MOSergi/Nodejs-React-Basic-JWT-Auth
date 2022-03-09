@@ -28,7 +28,7 @@ function Profile(){
             } 
         })
         .catch(error => console.log(error))
-    }, [loginStatus])
+    }, [])
 
     const logout = ()=>{
         fetch("http://localhost:4000/Logout",{
