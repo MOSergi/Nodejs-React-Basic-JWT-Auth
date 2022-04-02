@@ -1,8 +1,6 @@
 import { React, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/register.css";
-import validarPassword from "../js/confirmPass";
-import validRegister from "../js/validRegister";
 import UserContext from "../context/userContext";
 
 
@@ -10,39 +8,37 @@ function Register(){
 
     const [nombre, setNombre] = useState(null);
     const [email, setEmail] = useState(null);
+    const [pass, setPass] = useState(null);
     const [password, setPassword] = useState(null);
 
-    const {loginStatus, setLoginStatus} = useContext(UserContext);
+    const {setLoginStatus} = useContext(UserContext);
 
     const navegar = useNavigate();
 
+    console.log("soy register");
+
     useEffect(()=>{
-        fetch("http://localhost:4000/validateLoged", {
-            credentials : "include"
+        fetch("http://localhost:4000/validateLoged",{
+            credentials: "include"
         })
-        .then(respuesta => respuesta.json())
-        .then((datos) =>{
-            if (datos == "NoToken"){
-                setLoginStatus(false);
-            } else if (datos == "Invalid Token"){
-                setLoginStatus(false);
-            } else if (datos == "LogedIn"){
+        .then(response => response.json())
+        .then((userdata) => {
+
+            if (userdata == "LogedIn"){
                 setLoginStatus(true);
-                navegar("/Profile/");
+                navegar("/Profile");
             }
-
         })
-        .catch(error => console.log(error))
-
-        
+        .catch(errores => console.log(errores));
     }, []);
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-        if (validarPassword() == "error"){
+
+
+        if (pass != password){
             alert("Las contraseñas no coinciden");
         } else {
-
             let data = {
                 nombre : nombre,
                 email: email,
@@ -58,10 +54,17 @@ function Register(){
             })
             .then(response => response.json())
             .then((data) =>{
-                validRegister(data);
+                if (data == "Invalid Email"){
+                    alert("Este email no es válido, intentelo con otro");
+                } else if (data == "Register Error"){
+                    alert("Error durante el registro");
+                } else if (data == "Successfully Register"){
+                    alert("Registro correcto");
+                    navegar("/Login");
+                }
             })
             .catch(error => console.log(error));
-        }
+        }   
     }
 
     return(
@@ -72,7 +75,7 @@ function Register(){
                 <br />
                 <input onChange={(e)=>{setEmail(e.target.value)}} type="email" required placeholder="Introduce tu email" name="email"/>
                 <br />
-                <input className="pass" required type="password" placeholder="Introduce tu contraseña"/>
+                <input className="pass" onChange={(e)=>setPass(e.target.value)} required type="password" placeholder="Introduce tu contraseña"/>
                 <br />
                 <input onChange={(e)=>{setPassword(e.target.value)}} className="pass" required type="password" placeholder="Confirma tu contraseña" name="pass"/>
                 <br />

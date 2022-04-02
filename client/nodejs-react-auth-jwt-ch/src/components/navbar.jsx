@@ -8,7 +8,9 @@ function Navbar(){
 
     const {loginStatus, setLoginStatus} = useContext(UserContext);
 
-    useEffect(()=>{
+    console.log("soy navbar");
+
+    /*useEffect(()=>{
         fetch("http://localhost:4000/validateLoged", {
             credentials : "include"
         })
@@ -24,7 +26,8 @@ function Navbar(){
         })
         .catch(error => console.log(error))
 
-    }, [])
+    }, [])*/
+    
 
     if (loginStatus == true){
         return(

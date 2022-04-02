@@ -1,7 +1,6 @@
 import { React, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
-import validateLogin from "../js/validateLogin";
 import UserContext from "../context/userContext";
 
 function Login(){
@@ -11,8 +10,9 @@ function Login(){
 
     let navegar = useNavigate();
 
-    const {loginStatus, setLoginStatus} = useContext(UserContext);
+    const {setLoginStatus} = useContext(UserContext);
 
+    console.log("soy login");
 
     useEffect(()=>{
         fetch("http://localhost:4000/validateLoged",{
@@ -21,27 +21,10 @@ function Login(){
         .then(response => response.json())
         .then((userdata) => {
 
-            let LoginSec = document.querySelector(".loginRes");
-            let h3 = document.createElement("h3");
-
-            if (LoginSec != null){
-                LoginSec.innerHTML = "";
-            }
-
-            console.log(userdata);
-
             if (userdata == "LogedIn"){
                 setLoginStatus(true);
-                navegar("/Profile/");
-            } else if (userdata == "NoToken") {
-                setLoginStatus(false);
-            } else if (userdata == "Invalid Token"){
-                setLoginStatus(false);
-                LoginSec.style.padding = "10px;"
-                LoginSec.style.backgroundColor = "Orange";
-                h3.innerText = "El token no es válido o ha caducado";
-                LoginSec.append(h3);
-            }
+                navegar("/Profile");
+            } 
 
         })
         .catch(errores => console.log(errores));
@@ -66,9 +49,13 @@ function Login(){
         })
         .then(respuesta => respuesta.json())
         .then((data) => {
-            if (validateLogin(data) == "valid"){
+            if (data == "No match email"){
+                alert("El correo introducido no corresponde con el de ningún usuario registrado");
+            } else if (data == "Invalid Password"){
+                alert("Nombre de usuario o contraseña incorrectos");
+            } else if (data = "Valid Auth") {
                 setLoginStatus(true);
-                navegar("/Profile/");
+                navegar("/Profile");
             }
         })
         .catch(error => console.log(error))

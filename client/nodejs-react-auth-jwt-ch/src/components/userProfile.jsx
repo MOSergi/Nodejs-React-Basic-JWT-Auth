@@ -5,8 +5,10 @@ import "../styles/Navbar.css";
 
 function Profile(){
 
-    const {loginStatus, setLoginStatus} = useContext(UserContext);
+    const {setLoginStatus} = useContext(UserContext);
     const [username, setUsername] = useState("");
+
+    console.log("soy profile");
 
     const navegar = useNavigate();
 
@@ -21,7 +23,7 @@ function Profile(){
                 navegar("/Login/");
             } else if (info == "NoToken") {
                 setLoginStatus(false);
-                navegar("/Login/");
+                navegar("/Login");
             } else {
                 setUsername(info);
                 setLoginStatus(true);
