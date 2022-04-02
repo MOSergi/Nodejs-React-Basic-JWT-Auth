@@ -15,8 +15,6 @@ function Register(){
 
     const navegar = useNavigate();
 
-    console.log("soy register");
-
     useEffect(()=>{
         fetch("http://localhost:4000/validateLoged",{
             credentials: "include"

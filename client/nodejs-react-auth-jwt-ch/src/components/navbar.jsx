@@ -8,27 +8,6 @@ function Navbar(){
 
     const {loginStatus, setLoginStatus} = useContext(UserContext);
 
-    console.log("soy navbar");
-
-    /*useEffect(()=>{
-        fetch("http://localhost:4000/validateLoged", {
-            credentials : "include"
-        })
-        .then(respuesta => respuesta.json())
-        .then((datos) =>{
-            if (datos == "NoToken"){
-                setLoginStatus(false);
-            } else if (datos == "Invalid Token"){
-                setLoginStatus(false);
-            } else if (datos == "LogedIn"){
-                setLoginStatus(true);
-            }
-        })
-        .catch(error => console.log(error))
-
-    }, [])*/
-    
-
     if (loginStatus == true){
         return(
             <nav className="menu">

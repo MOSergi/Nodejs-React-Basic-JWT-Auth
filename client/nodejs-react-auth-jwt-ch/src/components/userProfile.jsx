@@ -8,8 +8,6 @@ function Profile(){
     const {setLoginStatus} = useContext(UserContext);
     const [username, setUsername] = useState("");
 
-    console.log("soy profile");
-
     const navegar = useNavigate();
 
     useEffect(()=>{

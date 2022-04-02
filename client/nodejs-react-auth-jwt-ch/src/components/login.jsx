@@ -12,8 +12,6 @@ function Login(){
 
     const {setLoginStatus} = useContext(UserContext);
 
-    console.log("soy login");
-
     useEffect(()=>{
         fetch("http://localhost:4000/validateLoged",{
             credentials: "include"

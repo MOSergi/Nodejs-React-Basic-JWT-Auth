@@ -6,8 +6,6 @@ import UserContext from "../context/userContext";
 
 function Section(){
 
-    console.log("soy home");
-
     const { loginStatus, setLoginStatus } = useContext(UserContext);
 
     useEffect(()=>{
